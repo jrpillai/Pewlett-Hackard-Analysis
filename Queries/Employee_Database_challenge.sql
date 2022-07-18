@@ -77,6 +77,8 @@ WHERE de.to_date = '9999-01-01'
 AND em.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
 ORDER BY em.emp_no;
 
+--Additional Queries for Readme
+
 --Number of Employees
 SELECT COUNT(*) emp_no
 FROM employees
@@ -85,7 +87,7 @@ FROM employees
 SELECT SUM(count) 
 FROM retiring_titles
 
---Number of Retiring Employees
+--Number of Retiring Employees, Senior and Junior
 SELECT SUM(Count) 
 FROM retiring_titles
 GROUP BY title LIKE '%Senior%';
@@ -102,6 +104,13 @@ ON me.emp_no = de.emp_no
 JOIN departments as dp
 ON dp.dept_no = de.dept_no
 
+-- Count Departments for Mentorable Employees
+SELECT COUNT(title), dept_name
+INTO dept_mentorable_count
+FROM dept_mentorable
+GROUP BY dept_name
+ORDER BY COUNT(*) DESC;
+
 -- Get departments for retiring employees
 SELECT ut.emp_no,
 	ut.title,
@@ -114,14 +123,32 @@ ON ut.emp_no = de.emp_no
 JOIN departments as dp
 ON dp.dept_no = de.dept_no
 
+-- Count Departments for Retiring Employees
+SELECT COUNT(title), dept_name
+FROM retiring_departments
+GROUP BY dept_name
+ORDER BY COUNT(*) DESC;
 
 
+-- Copy retiring departments table
+CREATE TABLE retiring_departments_count_1 AS 
+TABLE retiring_departments_count;
 
+-- Copy dept_mentorable table
+CREATE TABLE dept_mentorable_count_1 AS 
+TABLE dept_mentorable_count;
 
+-- Rename Columns
+ALTER TABLE retiring_departments_count_1 RENAME COLUMN count TO retiring
+ALTER TABLE dept_mentorable_count_1 RENAME COLUMN count TO mentorship_eligible
 
-
-
-
-
+SELECT a.retiring / b.mentorship_eligible as ratio,
+a.dept_name,
+a.retiring,
+b.mentorship_eligible
+-- INTO mentorship_ratio
+FROM retiring_departments_count_1 as a
+JOIN dept_mentorable_count_1 as b
+ON a.dept_name = b.dept_name
 
 
