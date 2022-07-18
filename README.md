@@ -56,9 +56,13 @@ GROUP BY title LIKE '%Senior%';
 I created additional tables, joined them, and created a new ratio calculation to see the breakdown of retiring and mentorship eligible employees by department. The table screen shot is below:
 
 
-As you can quickly see, more employees are retiring in the Development, Production, and Sales, departments, likely because these departments are the largest in the company. However, overall the ratio of retiring to mentorship eligible employees is relatively constant, with an average of about 45 retiring employees to each mentorship eligible employees. With minor incentives, it should be possible to pair each mentorship eligible employee with a retiring employee with suitable mentor, especially since more than half of retiring employees are in senior roles. The SQL query code to produce the table is also included. 
+As you can quickly see, more employees are retiring in the Development, Production, and Sales, departments, likely because these departments are the largest in the company. However, overall the ratio of retiring to mentorship eligible employees is relatively constant, with an average of about 45 retiring employees to each mentorship eligible employees.
 
+With minor incentives, it should be possible to pair each mentorship eligible employee with a retiring employee with suitable mentor, especially since more than half of retiring employees are in senior roles. The main outliers are the Human Resources and Marketing Departments, which may need additional attention. 
 
+The SQL query code to produce the table is also included. 
+
+![Mentorship Ratio by Department](Images/mentorship_ratio.png)
 
 ```
 -- Get departments for mentorship eligible employees
