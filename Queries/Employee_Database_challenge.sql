@@ -67,7 +67,7 @@ SELECT DISTINCT ON(em.emp_no)
 	de.from_date,
 	de.to_date,
 	ti.title
-INTO mentorship_eligibility
+-- INTO mentorship_eligibility
 FROM employees as em
 JOIN dept_emp as de
 ON em.emp_no = de.emp_no
@@ -76,6 +76,51 @@ ON de.emp_no = ti.emp_no
 WHERE de.to_date = '9999-01-01'
 AND em.birth_date BETWEEN '1965-01-01' AND '1965-12-31'
 ORDER BY em.emp_no;
+
+--Number of Employees
+SELECT COUNT(*) emp_no
+FROM employees
+
+--Number of Retiring Employees
+SELECT SUM(count) 
+FROM retiring_titles
+
+--Number of Retiring Employees
+SELECT SUM(Count) 
+FROM retiring_titles
+GROUP BY title LIKE '%Senior%';
+
+-- Get departments for mentorship eligible employees
+SELECT me.emp_no,
+	me.title,
+	de.dept_no,
+	dp.dept_name
+INTO dept_mentorable
+FROM mentorship_eligibility as me
+JOIN dept_emp as de
+ON me.emp_no = de.emp_no
+JOIN departments as dp
+ON dp.dept_no = de.dept_no
+
+-- Get departments for retiring employees
+SELECT ut.emp_no,
+	ut.title,
+	de.dept_no,
+	dp.dept_name
+INTO retiring_departments
+FROM unique_titles as ut
+JOIN dept_emp as de
+ON ut.emp_no = de.emp_no
+JOIN departments as dp
+ON dp.dept_no = de.dept_no
+
+
+
+
+
+
+
+
 
 
 
